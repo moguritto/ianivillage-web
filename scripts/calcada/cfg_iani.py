@@ -28,3 +28,4 @@ SUBS = [
      '<a href="/politica-de-privacidad/" style="color:inherit"><span class="elementor-icon-list-text">Política de Privacidad</span></a>'),
 ]
 EXTRA_PAGES = ["aviso-legal/", "politica-de-privacidad/"]
+LIVE_JSON = "/mnt/user-data/uploads/Downloads/ianivillage_vivo.json"
