@@ -1,0 +1,6 @@
+wp-content/plugins/elementor/assets/lib/dialog/dialog.min.js
+wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js
+wp-content/plugins/elementor-pro/assets/js/nav-menu.3afa8f5eb1fef7c22561.bundle.min.js
+wp-content/plugins/elementor/assets/js/text-editor.45609661e409413f1cef.bundle.min.js
+wp-content/plugins/elementor/assets/js/nested-accordion.294d40984397351fd0f5.bundle.min.js
+wp-content/plugins/elementor-pro/assets/js/nested-carousel.659b0373371215e60dab.bundle.min.js
