@@ -23,7 +23,8 @@ WIDGETS = {
 SUBS = []
 SUBS = [
     (r'<span class="elementor-icon-list-text">Aviso Legal</span>',
-     '<a href="aviso-legal/" style="color:inherit"><span class="elementor-icon-list-text">Aviso Legal</span></a>'),
+     '<a href="/aviso-legal/" style="color:inherit"><span class="elementor-icon-list-text">Aviso Legal</span></a>'),
     (r'<span class="elementor-icon-list-text">Política de Privacidad</span>',
-     '<a href="politica-de-privacidad/" style="color:inherit"><span class="elementor-icon-list-text">Política de Privacidad</span></a>'),
+     '<a href="/politica-de-privacidad/" style="color:inherit"><span class="elementor-icon-list-text">Política de Privacidad</span></a>'),
 ]
+EXTRA_PAGES = ["aviso-legal/", "politica-de-privacidad/"]

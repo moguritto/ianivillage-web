@@ -45,6 +45,7 @@ INSTAGRAM = "https://www.instagram.com/espacioteots/"
 INSTAGRAM_TXT = "Ver Espacio Teots en Instagram"
 SUBS = []
 OLD_REDIRECTS_DIR = None
+EXTRA_PAGES = []  # páginas que se añaden aparte (p. ej. textos legales de la copia anterior)
 PHONE = re.compile(r"^/[\w-]+/(?:34)?(\d{9})/?$")
 UNWANTED_SCRIPT = re.compile(r"pixelyoursite|pys[-_]|fbq\(|googletagmanager|gtag\(|google-analytics|xmlrpc", re.I)
 
@@ -56,7 +57,7 @@ def norm_page(p):
 
 def page_target(p):
     p = norm_page(p)
-    if p in PAGES: return p
+    if p in PAGES or p in EXTRA_PAGES: return p
     if p in REDIRECTS: return REDIRECTS[p]
     return None
 
@@ -90,6 +91,26 @@ def replace_widget(html, cls, new):
     out.append(html[pos:])
     return "".join(out)
 
+REMOVE_IF_CONTAINS = []  # quita el widget entero si contiene alguno de estos textos
+
+def remove_widgets(html):
+    if not REMOVE_IF_CONTAINS:
+        return html
+    out, pos = [], 0
+    for m in re.finditer(r'<div class="elementor-element[^"]*\belementor-widget\b[^"]*"[^>]*>', html):
+        if m.start() < pos: continue
+        i, depth = m.end(), 1
+        for t in re.finditer(r"<(/?)div\b[^>]*>", html[i:]):
+            depth += -1 if t.group(1) else 1
+            if depth == 0:
+                end = i + t.end()
+                block = html[m.start():end]
+                if any(k in block for k in REMOVE_IF_CONTAINS):
+                    out.append(html[pos:m.start()]); pos = end
+                break
+    out.append(html[pos:])
+    return "".join(out)
+
 def replace_eventon(html):
     w = dict(WIDGETS)
     if EVENTON_STATIC:
@@ -115,6 +136,7 @@ def clean_html(html):
                   'font-family:Poppins,sans-serif;font-weight:600;font-size:15px;text-decoration:none">'
                   + INSTAGRAM_TXT + '</a>', html)
     html = replace_eventon(html)
+    html = remove_widgets(html)
     html = re.sub(r"<script\b[^>]*insta-gallery[^>]*></script>", "", html, flags=re.I)
     html = re.sub(r"<link\b[^>]*(?:insta-gallery|youtube-feed-pro/css/https)[^>]*>", "", html, flags=re.I)
     for a, b in SUBS:
